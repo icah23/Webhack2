@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prediksi All WinGo</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    input {
+      width: 300px;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      background: crimson;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .hasil {
+      margin-top: 20px;
+      font-size: 22px;
+    }
+    .note {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #aaa;
+    }
+  </style>
+  <script>
+    // Fungsi expired
+    const expiredDate = new Date("2025-05-31");
+    const today = new Date();
+
+    if (today > expiredDate) {
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.innerHTML = "<h2 style='color:red;'>Website ini telah expired pada 2025-05-31</h2>";
+      });
+      throw new Error("Expired");
+    }
+  </script>
+</head>
+<body>
+  <h2>Prediksi Wingo - 4 Angka Terakhir</h2>
+  <p>Masukkan 4 hasil akhir (tanpa koma, misal: 6425)</p>
+  <input type="text" id="input4" maxlength="4" placeholder="Contoh: 8362" oninput="hapusPrediksi()"><br>
+  <button onclick="prediksi()">Prediksi</button>
+
+  <div class="hasil" id="output"></div>
+  <div class="note" id="note"></div>
+
+  <script>
+    function toLabel(n) {
+      return n >= 5 ? "Big" : "Small";
+    }
+
+    function generateDummy15() {
+      let result = [];
+      for (let i = 0; i < 15; i++) {
+        result.push(Math.floor(Math.random() * 10));
+      }
+      return result;
+    }
+
+    function hapusPrediksi() {
+      document.getElementById("output").innerText = "";
+      document.getElementById("note").innerText = "";
+    }
+
+    function prediksi() {
+      const input = document.getElementById("input4").value.trim();
+      if (input.length !== 4 || /[^0-9]/.test(input)) {
+        document.getElementById("output").innerText = "Masukkan tepat 4 angka (0-9)!";
+        return;
+      }
+
+      const inputArr = input.split("").map(Number);
+      const dummy15 = generateDummy15();
+      const label15 = dummy15.map(toLabel);
+
+      const big = label15.filter(x => x === "Big").length;
+      const small = 15 - big;
+      const selisih = Math.abs(big - small);
+
+      const inputLabels = inputArr.map(toLabel);
+      const big_in = inputLabels.filter(x => x === "Big").length;
+      const small_in = 4 - big_in;
+
+      let hasil;
+      if (selisih >= 5) {
+        hasil = big_in > small_in ? "Small" : "Big";
+      } else if (selisih >= 2) {
+        hasil = big_in > small_in ? "Big" : "Small";
+      } else {
+        hasil = inputLabels[0];
+      }
+
+      document.getElementById("output").innerText = "Prediksi: " + hasil;
+      document.getElementById("note").innerText = "Akurasi 85% • Utamakan Kompensasi • Maksimal K3";
+      document.getElementById("input4").value = "";
+    }
+  </script>
+</body>
+</html>
